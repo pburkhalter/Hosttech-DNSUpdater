@@ -29,19 +29,19 @@ A very simple updater using the Hosttech-API. Could be useful if you need to upd
 3. Create a new Volume under "Volumes" to hold the config/token, for example: <br /> 
 `hosttech_config`
 4. Create a new Container
-   5. Choose the created image from local repository
-   6. Set the networking to `host`
-   7. Map the previously created Volume to `/config`
-   8. Set the restart policy to `Unless stopped`
-   9. Set the required ENV-Variables...:<br />
+   - Choose the created image from local repository
+   - Set the networking to `host`
+   - Map the previously created Volume to `/config`
+   - Set the restart policy to `Unless stopped`
+   - Set the required ENV-Variables...:<br />
 
-    `HTUPD_TTL=10800`<br />
-    `HTUPD_URL=https://api.ns1.hosttech.eu/api/user/v1/zones/` <br />
-    `HTUPD_TOKEN= [YOUR HOSTTECH TOKEN HERE]` <br />
-    `HTUPD_RECORD=[YOUR HOSTTECH RECORD HERE]` <br />
-    `HTUPD_DOMAIN=[YOUR DOMAIN HERE]` <br />
-    `HTUPD_SUBDOMAIN=[YOUR SUBDOMAIN HERE]` <br />
-    `TZ=Europe/Zurich`<br />
+       `HTUPD_TTL=10800`<br />
+       `HTUPD_URL=https://api.ns1.hosttech.eu/api/user/v1/zones/` <br />
+       `HTUPD_TOKEN= [YOUR HOSTTECH TOKEN HERE]` <br />
+       `HTUPD_RECORD=[YOUR HOSTTECH RECORD HERE]` <br />
+       `HTUPD_DOMAIN=[YOUR DOMAIN HERE]` <br />
+       `HTUPD_SUBDOMAIN=[YOUR SUBDOMAIN HERE]` <br />
+       `TZ=Europe/Zurich`<br />
 5. Deploy your container! By default, it will refresh the IP every 30min (defined in the crontab-file)
 
 ### Swagger
