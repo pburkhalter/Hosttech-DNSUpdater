@@ -5,15 +5,16 @@ MAINTAINER pburkhalter
 
 WORKDIR /app
 
+COPY entrypoint.sh entrypoint.sh
+COPY app.py app.py
+COPY crontab /etc/cron.d/crontab
+
 RUN apt-get update
 RUN apt-get install -y cron python3-requests python3-yaml
 
-COPY entrypoint.sh entrypoint.sh
-COPY app.py app.py
-COPY cronjob /etc/cron.d/hosttech-updater
+RUN chmod +x app.py
+RUN chmod +x entrypoint.sh
+RUN chmod 0644 /etc/cron.d/crontab
+RUN crontab /etc/cron.d/crontab
 
-RUN crontab /etc/cron.d/hosttech-updater
-
-ENTRYPOINT ["cron", "-f"]
-
-
+ENTRYPOINT ["/app/entrypoint.sh"]

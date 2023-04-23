@@ -32,33 +32,31 @@ parser.add_argument('--url', metavar='url', type=str, dest='url',
                     default=getenv('HTUPD_URL'),
                     help='The base-url for the hosttech API (optional)')
 
-parser.add_argument('--force', metavar='force', type=str, dest='force',
-                    default=getenv('HTUPD_FORCE'),
-                    help='Force parsing arguments, ignoring (and overwriting) already saved config (True/False)')
-
 args = vars(parser.parse_args())
 
 
 with open(r'/config/token', 'a+') as token_file:
     token_file.seek(0)
-    if len(token_file.read()) == 0 or args.get("force"):
+    if len(token_file.read()) == 0:
         if not args.get('token'):
             raise IndexError('Missing token! Exiting...')
 
         token_file.write(args.get('token'))
         token = args.pop('token')
     else:
+        token_file.seek(0)
         token = token_file.read(-1)
 
 with open(r'/config/conf.yaml', 'a+') as config_file:
     config_file.seek(0)
-    if len(config_file.read()) == 0 or args.get("force"):
+    if len(config_file.read()) == 0:
         if not all(key in args.keys() for key in ['record', 'domain', 'subdomain']):
             raise IndexError('Missing arguments! Exiting...')
 
         yaml.dump(args, config_file, default_flow_style=False)
         config = args
     else:
+        config_file.seek(0)
         config = yaml.safe_load(config_file)
 
 
